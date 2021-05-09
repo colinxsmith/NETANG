@@ -4,8 +4,13 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-export function getBaseUrl() {
-  return document.getElementsByTagName('base')[0].href;
+function getBaseUrl() {
+  const back = document.getElementsByTagName('base')[0].href;
+  console.log(back);
+  return 'https://192.168.0.25:5001/';
+  // return 'https://localhost:5001/';
+  //return 'http://localhost:5000/';
+  return back;
 }
 
 const providers = [

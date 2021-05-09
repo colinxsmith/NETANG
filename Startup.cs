@@ -50,6 +50,12 @@ namespace NETANG
             }
 
             app.UseRouting();
+            app.UseCors(x => x
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowAnyOrigin()
+          //  .SetIsOriginAllowed(d=>true)
+            );
 
             app.UseEndpoints(endpoints =>
             {
@@ -64,12 +70,15 @@ namespace NETANG
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
+                
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //  spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
+       
         }
     }
 }
