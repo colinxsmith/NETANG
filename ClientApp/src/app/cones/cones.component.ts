@@ -9,14 +9,18 @@ import * as d3 from 'd3';
 })
 export class ConesComponent implements OnInit {
   DATA: ConeData[] = [];
-  width = 1000;
+  width = 500;
   height = 500;
   scaleX = d3.scaleLinear();
   scaleY = d3.scaleLinear();
-   format = (n: number) => d3.format('2.1f')(n);
+  scaleZ = d3.scaleLinear();
+  format = (n: number) => d3.format('2.4f')(n);
+  formatL = (n: number) => d3.format('2.1f')(n);
+  abshack = Math.abs;
+  translatehack = (x: number, y: number, r = 0) => `translate(${x},${y}) rotate(${r})`;
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-  
-    this.http.get<ConeData[]>(this.baseUrl + 'coneopt').subscribe(result => {
+
+    http.get<ConeData[]>(baseUrl + 'coneopt').subscribe(result => {
       this.DATA = result;
       this.scaleX
         .domain([0, this.DATA[0].x.length])
@@ -24,7 +28,11 @@ export class ConesComponent implements OnInit {
       this.scaleY
         .domain([-1, 1])
         .range([this.height * 0.9, this.height * 0.1]);
-    }, error => console.error(error));}
+      this.scaleZ
+        .domain([d3.min(this.DATA[0].z), d3.max(this.DATA[0].z)])
+        .range([this.height * 0.9, this.height * 0.1]);
+    }, error => console.error(error));
+  }
 
   ngOnInit() {
   }
@@ -33,17 +41,17 @@ export class ConesComponent implements OnInit {
     const origin = (d3
       .select('app-cones')
       .node() as HTMLElement).getBoundingClientRect(); //Try to get position correct when the picture has scrollbars.
-    const here = d3.select(e.target as any); 
+    const here = d3.select(e.target as any);
     if (inout) {
-      here.style('opacity',0.5); 
+      here.style('opacity', 0.5);
       tip //The tooltip
-        .style('left', `${e.clientX - 70 }px`)
-        .style('top', `${e.clientY - 60}px`)
+        .style('left', `${e.clientX -origin.left+0.5*this.width/this.DATA[0].x.length}px`)
+        .style('top', `${e.clientY -origin.top}px`)
         .style('opacity', 1)
         .style('display', 'inline-block')
-        .html(`x:${this.format(x)} y:${this.format(y)}`);
+        .html(`x:${x} ${this.format(y)}`);
     } else {
-      here.style('opacity',1); 
+      here.style('opacity', 1);
       tip.style('opacity', 0).style('display', 'none');
     }
   }
