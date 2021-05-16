@@ -32,7 +32,9 @@
     "rxjs": "^6.6.3",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
-    "zone.js": "0.9.1"
+    "zone.js": "0.9.1",
+    "d3": "^6.7.0",
+    "@types/d3": "^6.3.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.29",

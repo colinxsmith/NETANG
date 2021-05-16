@@ -1,0 +1,14 @@
+<div class="mainTip"></div>
+<h1 id="tableLabel">Conic Optimisation</h1>
+
+<ng-container *ngIf="DATA&&DATA[0]">
+    <svg [attr.height]="height" [attr.width]="width">
+        <g *ngFor="let x of DATA[0].x;let i=index;">
+            <circle 
+         (mouseleave)="info($event, i, x)"
+          (mouseenter)="info($event, i, x, true)"
+            
+            [attr.cx]="scaleX(i)" [attr.cy]="scaleY(x)" r="10"></circle>
+        </g>
+    </svg>
+</ng-container>
