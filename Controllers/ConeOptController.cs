@@ -22,11 +22,13 @@ namespace NETANG.Controllers
         public IEnumerable<ConeOpt> Get()
         {
             ConeOpt send = cones();
-            return Enumerable.Range(1, 1).Select(index => new ConeOpt
+            return Enumerable.Range(1, 1).Select(i => new ConeOpt
             {
                 x = send.x,
                 y = send.y,
-                z = send.z
+                z = send.z,
+                kappa = send.kappa,
+                tau = send.tau
             })
             .ToArray();
         }
@@ -82,6 +84,8 @@ namespace NETANG.Controllers
             back.x = x;
             back.y = y;
             back.z = s;
+            back.kappa = kappa[0];
+            back.tau = tau[0];
             for (var i = 0; i < x.Length; ++i) back.x[i] /= tau[0];
             for (var i = 0; i < y.Length; ++i) back.y[i] /= tau[0];
             for (var i = 0; i < s.Length; ++i) back.z[i] /= tau[0];
