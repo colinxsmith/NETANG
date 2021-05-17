@@ -11,12 +11,12 @@ export class ConesComponent implements OnInit {
   DATA: ConeData[] = [];
   width = 500;
   height = 500;
+  abshack = Math.abs;
   scaleX = d3.scaleLinear();
   scaleY = d3.scaleLinear();
   scaleZ = d3.scaleLinear();
   format = (n: number) => d3.format('2.4f')(n);
   formatL = (n: number) => d3.format('2.1f')(n);
-  abshack = Math.abs;
   translatehack = (x: number, y: number, r = 0) => `translate(${x},${y}) rotate(${r})`;
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
@@ -40,13 +40,13 @@ export class ConesComponent implements OnInit {
     const tip = d3.select('app-cones').select('div.mainTip');
     const origin = (d3
       .select('app-cones')
-      .node() as HTMLElement).getBoundingClientRect(); //Try to get position correct when the picture has scrollbars.
-    const here = d3.select(e.target as any);
+      .node() as HTMLElement).getBoundingClientRect(); // Try to get position correct when the picture has scrollbars.
+    const here = d3.select(e.target);
     if (inout) {
       here.style('opacity', 0.5);
-      tip //The tooltip
-        .style('left', `${e.clientX -origin.left+0.5*this.width/this.DATA[0].x.length}px`)
-        .style('top', `${e.clientY -origin.top}px`)
+      tip // The tooltip
+        .style('left', `${e.clientX - 60 - 0 * origin.left + 0 * this.width / this.DATA[0].x.length}px`)
+        .style('top', `${e.clientY - origin.top}px`)
         .style('opacity', 1)
         .style('display', 'inline-block')
         .html(`x:${x} ${this.format(y)}`);
@@ -57,7 +57,7 @@ export class ConesComponent implements OnInit {
   }
 }
 interface ConeData {
-  x: Array<number>,
-  y: Array<number>,
-  z: Array<number>
+  x: Array<number>;
+  y: Array<number>;
+  z: Array<number>;
 }
