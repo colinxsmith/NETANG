@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ConesComponent } from './cones/cones.component';
+import { BarplotComponent } from './barplot/barplot.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ConesComponent } from './cones/cones.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    ConesComponent
+    ConesComponent,
+    BarplotComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

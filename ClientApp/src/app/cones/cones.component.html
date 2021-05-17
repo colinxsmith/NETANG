@@ -1,37 +1,12 @@
-<div class="mainTip"></div>
+
 <h1 style="text-align: center;" id="tableLabel">Conic Optimisation Results</h1>
 
 <ng-container *ngIf="DATA&&DATA[0]">
     <div style="display: inline-flex;">
     <div>
-        <svg [attr.height]="height" [attr.width]="width">
-            <line [attr.x1]="0" [attr.x2]="width" [attr.y1]="scaleY(0)" [attr.y2]="scaleY(0)"></line>
-            <line [attr.y1]="0" [attr.y2]="height" [attr.x1]="scaleX(0)" [attr.x2]="scaleX(0)"></line>
-            <g [attr.transform]="translatehack(scaleX(0),0)" *ngFor="let y of [-1,-0.5,0.5,1]">
-                <text class="lab" x="-0.5em" [attr.y]="scaleY(y)">{{formatL(y)}}</text>
-            </g>
-            <g *ngFor="let x of DATA[0].x;let i=index;">
-                <rect [attr.class]="x>=0?'plus':'minus'" (mouseleave)="info($event, i, x)"
-                    (mouseenter)="info($event, i, x, true)" [attr.width]="scaleX(1)-scaleX(0)"
-                    [attr.height]="abshack(scaleY(x)-scaleY(0))" [attr.x]="scaleX(i)" [attr.y]="scaleY(x>=0?x:0)">
-                </rect>
-            </g>
-        </svg>
+    <app-barplot [title]="'Primal'" [height]="height" [width]="width" [DATA]="DATA[0].x"></app-barplot>
     </div><br>
-    <div>
-        <svg [attr.height]="height" [attr.width]="width">
-            <line [attr.x1]="0" [attr.x2]="width" [attr.y1]="scaleZ(0)" [attr.y2]="scaleZ(0)"></line>
-            <line [attr.y1]="0" [attr.y2]="height" [attr.x1]="scaleX(0)" [attr.x2]="scaleX(0)"></line>
-            <g [attr.transform]="translatehack(scaleX(0),0)" *ngFor="let y of scaleZ.domain()">
-                <text class="lab" x="-0.5em" [attr.y]="scaleZ(y)">{{formatL(y)}}</text>
-            </g>
-            <g *ngFor="let x of DATA[0].z;let i=index;">
-                <rect [attr.class]="x>=0?'plus':'minus'" (mouseleave)="info($event, i, x)"
-                    (mouseenter)="info($event, i, x, true)" [attr.width]="scaleX(1)-scaleX(0)"
-                    [attr.height]="abshack(scaleZ(x)-scaleZ(0))" [attr.x]="scaleX(i)" [attr.y]="scaleZ(x>=0?x:0)">
-                </rect>
-            </g>
-        </svg>
+    <div><app-barplot [title]="'Complementary'" [height]="height" [width]="width" [DATA]="DATA[0].z"></app-barplot>
     </div>
 </div>
 </ng-container>
