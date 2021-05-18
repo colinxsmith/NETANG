@@ -26,6 +26,12 @@ namespace NETANG.Controllers
             send
             };
         }
+        [HttpPost]
+        public IActionResult Create(ConeOpt receive)
+        {
+            Console.WriteLine($"tau = {receive.tau}");
+            return Accepted();
+        }
         void Display(double[] x, double tau = 1.0)
         {
             foreach (var d in x)
