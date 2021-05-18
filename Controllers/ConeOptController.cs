@@ -30,6 +30,8 @@ namespace NETANG.Controllers
         public IActionResult Create(ConeOpt receive)
         {
             Console.WriteLine($"tau = {receive.tau}");
+            Console.WriteLine($"kappa = {receive.kappa}");
+            Display(receive.x,1);
             return Accepted();
         }
         void Display(double[] x, double tau = 1.0)
