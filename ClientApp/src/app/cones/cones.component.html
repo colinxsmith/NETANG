@@ -2,11 +2,18 @@
 <h1 style="text-align: center;" id="tableLabel">Conic Optimisation Results</h1>
 
 <ng-container *ngIf="DATA&&DATA[0]">
-    <div style="display: inline-flex;">
-    <div>
-    <app-barplot [title]="'Primal'" [height]="height" [width]="width" [DATA]="DATA[0].x"></app-barplot>
-    </div><br>
-    <div><app-barplot [title]="'Complementary'" [height]="height" [width]="width" [DATA]="DATA[0].z"></app-barplot>
-    </div>
-</div>
+    <table style="width:100%">
+  <tr>
+    <td><app-barplot [title]="'Primal'" [height]="height" [width]="width" [DATA]="DATA[0].x"></app-barplot></td>
+    <td><app-barplot [title]="'Dual'" [height]="height" [width]="width" [DATA]="DATA[0].y"></app-barplot></td>
+    <td><app-barplot [title]="'Complementary'" [height]="height" [width]="width" [DATA]="DATA[0].z"></app-barplot></td>
+    <td><app-barplot [title]="'Utility'" [height]="height" [width]="width" [DATA]="DATA[0].c"></app-barplot></td>
+    <td><app-barplot [title]="'Constraints'" [height]="height" [width]="width" [DATA]="DATA[0].b"></app-barplot></td>
+  </tr>
+  <tr>
+  <td>&tau;={{format(DATA[0].tau)}}</td>
+  <td>&kappa;={{format(DATA[0].kappa)}}</td>
+  </tr>
+</table>
+
 </ng-container>

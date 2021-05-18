@@ -14,6 +14,8 @@ export class BarplotComponent implements OnInit {
   abshack = Math.abs;
   scaleX = d3.scaleLinear();
   scaleY = d3.scaleLinear();
+  rimX = 0.15;
+  rimY = 0.1;
   format = (n: number) => d3.format('2.4f')(n);
   formatL = (n: number) => d3.format('2.1f')(n);
   translatehack = (x: number, y: number, r = 0) => `translate(${x},${y}) rotate(${r})`;
@@ -22,12 +24,12 @@ export class BarplotComponent implements OnInit {
   ngOnInit() {
     this.scaleX
       .domain([0, this.DATA.length])
-      .range([this.width * 0.1, this.width * 0.9]);
+      .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
     this.scaleY
       .domain([d3.min(this.DATA), d3.max(this.DATA)])
-      .range([this.height * 0.9, this.height * 0.1]);
+      .range([this.height * (1 - this.rimY), this.height * this.rimY]);
     setTimeout(() => {
-      this.update()
+      this.update();
     }, 100);
   }
 
