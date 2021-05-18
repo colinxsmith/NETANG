@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import * as d3 from 'd3';
@@ -12,14 +12,7 @@ export class ConesComponent implements OnInit {
   width = 200;
   height = 200;
   format = (n: number) => d3.format('0.4f')(n);
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-
-    http.get<ConeData[]>(baseUrl + 'coneopt').subscribe(result => {
-      this.DATA = result;
-      const cc: ConeData = { x: this.DATA[0].x, step: 68 };
-      this.sendData('coneopt', this.DATA[0]);
-      this.sendData('coneopt', cc);
-    }, error => console.error(error));
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private element: ElementRef) {
   }
 
   sendData(key = 'coneopt', sendObject = {} as ConeData) {
@@ -30,14 +23,21 @@ export class ConesComponent implements OnInit {
     return this
       .http
       .post<ConeData>(`${this.baseUrl}${key}`, sendObject, options)
-      .subscribe(ddd => {
-        console.log(ddd);
-        return ddd;
-      })
+      .subscribe(ddd => ddd)
       ;
   }
-
+  sendStep() {
+    const back = +(d3.select(this.element.nativeElement).select('input').node() as HTMLInputElement & Event).value;
+    const cc = { step: back };
+    this.sendData('coneopt', cc as ConeData);
+  }
   ngOnInit() {
+    this.init();
+  }
+  init() {
+    this.http.get<ConeData[]>(this.baseUrl + 'coneopt').subscribe(result => {
+      this.DATA = result;
+    }, error => console.error(error));
   }
 }
 interface ConeData {

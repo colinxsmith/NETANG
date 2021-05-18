@@ -9,5 +9,6 @@ namespace NETANG
         public double[] b {get;set;}
         public double tau{get;set;}
         public double kappa{get;set;}
+        public double step{get;set;}
     }
 }
