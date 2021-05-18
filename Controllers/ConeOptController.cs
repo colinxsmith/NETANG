@@ -17,22 +17,14 @@ namespace NETANG.Controllers
         {
             _logger = logger;
         }
-
         [HttpGet]
-        public IEnumerable<ConeOpt> Get()
+        public ActionResult<IEnumerable<ConeOpt>> GetAll()
         {
             ConeOpt send = cones();
-            return Enumerable.Range(1, 1).Select(i => new ConeOpt
+            return new[]// We only want to send 1 optimisation result
             {
-                x = send.x,
-                y = send.y,
-                z = send.z,
-                c = send.c,
-                b = send.b,
-                kappa = send.kappa,
-                tau = send.tau
-            })
-            .ToArray();
+            send
+            };
         }
         void Display(double[] x, double tau = 1.0)
         {
