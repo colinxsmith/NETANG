@@ -31,7 +31,8 @@ namespace NETANG.Controllers
         {
             Console.WriteLine($"tau = {receive.tau}");
             Console.WriteLine($"kappa = {receive.kappa}");
-            Display(receive.x,1);
+            Console.WriteLine($"step = {receive.step}");
+            Display(receive.x, 1);
             return Accepted();
         }
         void Display(double[] x, double tau = 1.0)
@@ -47,7 +48,7 @@ namespace NETANG.Controllers
             uint ncone = 1, m = 2;
             int[] cone = { 12 };
             int[] typecone = { 1 };
-            double[] b = { 0, 1 };
+            double[] b = { -5e-1, 1 };
             double[] A ={1,1,1,1,1,1,1,1,1,1,1,0,
                          0,0,0,0,0,0,0,0,0,0,0,1};
             uint n = 0;
@@ -68,7 +69,7 @@ namespace NETANG.Controllers
             int straight = 0;
             int fastbreak = 1;
             int log = 0;
-            int method = 2;
+            int method = 3;
             var outfile = "log";
             int homog = 1;
             var nf = 0;
@@ -90,6 +91,7 @@ namespace NETANG.Controllers
             back.b = b;
             back.kappa = kappa[0];
             back.tau = tau[0];
+            back.step = stepmax;
             for (var i = 0; i < x.Length; ++i) back.x[i] /= tau[0];
             for (var i = 0; i < y.Length; ++i) back.y[i] /= tau[0];
             for (var i = 0; i < s.Length; ++i) back.z[i] /= tau[0];
