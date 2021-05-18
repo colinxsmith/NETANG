@@ -27,6 +27,8 @@ namespace NETANG.Controllers
                 x = send.x,
                 y = send.y,
                 z = send.z,
+                c = send.c,
+                b = send.b,
                 kappa = send.kappa,
                 tau = send.tau
             })
@@ -81,9 +83,11 @@ namespace NETANG.Controllers
             Display(y, tau[0]);
             Display(s, tau[0]);
             var back = new ConeOpt();
-            back.x = x;
-            back.y = y;
-            back.z = s;
+            back.x = (double[])x.Clone();
+            back.y = (double[])y.Clone();
+            back.z = (double[])s.Clone();
+            back.c = c;
+            back.b = b;
             back.kappa = kappa[0];
             back.tau = tau[0];
             for (var i = 0; i < x.Length; ++i) back.x[i] /= tau[0];

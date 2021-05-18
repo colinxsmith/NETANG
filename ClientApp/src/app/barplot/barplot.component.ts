@@ -1,4 +1,4 @@
-import { Component, Input, OnInit ,ElementRef} from '@angular/core';
+import { Component, Input, OnInit, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -17,7 +17,7 @@ export class BarplotComponent implements OnInit {
   format = (n: number) => d3.format('2.4f')(n);
   formatL = (n: number) => d3.format('2.1f')(n);
   translatehack = (x: number, y: number, r = 0) => `translate(${x},${y}) rotate(${r})`;
-  constructor(private element:ElementRef) { }
+  constructor(private element: ElementRef) { }
 
   ngOnInit() {
     this.scaleX
@@ -26,9 +26,9 @@ export class BarplotComponent implements OnInit {
     this.scaleY
       .domain([d3.min(this.DATA), d3.max(this.DATA)])
       .range([this.height * 0.9, this.height * 0.1]);
-      setTimeout(()=>{
-        this.update()
-      },100);
+    setTimeout(() => {
+      this.update()
+    }, 100);
   }
 
   info(e: MouseEvent, x: number, y: number, inout = false) {
@@ -36,7 +36,7 @@ export class BarplotComponent implements OnInit {
     const origin = (d3
       .select('app-cones')
       .node() as HTMLElement).getBoundingClientRect(); // Try to get position correct when the picture has scrollbars.
-    const here = d3.select(e.target);
+    const here = d3.select(e.target as HTMLElement & EventTarget);
     if (inout) {
       here.style('opacity', 0.5);
       tip // The tooltip
@@ -54,8 +54,11 @@ export class BarplotComponent implements OnInit {
     d3.select(this.element.nativeElement).selectAll('rect').data(this.DATA)
       .transition()
       .duration(2000)
+      .attrTween('y', d => t => {
+        return `${t * this.scaleY(d >= 0 ? d : d * (1 - t))}`;
+      })
       .attrTween('height', (d, i) => t => {
-        return `${t*this.abshack(this.scaleY(this.DATA[i]) - this.scaleY(0))}`;
+        return `${this.abshack(this.scaleY(d * t) - this.scaleY(d * (1 - t)))}`;
       });
   }
 }
