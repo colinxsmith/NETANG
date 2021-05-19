@@ -1,58 +1,41 @@
-import { Component, OnInit, Inject, ElementRef,OnChanges } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import * as d3 from 'd3';
 @Component({
   selector: 'app-cones',
   templateUrl: './cones.component.html',
   styleUrls: ['./cones.component.css']
 })
-export class ConesComponent implements OnInit,OnChanges {
+export class ConesComponent implements OnInit {
   DATA: ConeData[] = [];
   width = 200;
   height = 200;
   format = (n: number) => d3.format('0.4f')(n);
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private element: ElementRef) {
   }
-
-  sendData(key = 'coneopt', sendObject = {} as ConeData) {
+  sendData(key = 'coneopt', sendObject = {} as ConeData[]) {
     const options = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
     };
-    return this.http.post<any>(`${this.baseUrl}${key}`, sendObject, options)
-      .pipe(map(ddd => {
-        console.log(ddd);
-        this.DATA = [ddd];
-        return ddd;
-      }));
+    return this.http.post<ConeData[]>(`${this.baseUrl}${key}`, sendObject, options);
   }
   sendStep() {
     const back = +(d3.select(this.element.nativeElement).select('input').node() as HTMLInputElement & Event).value;
-    const cc = { step: back };
-    this.sendData('coneopt', cc as ConeData)
+    const cc:Array<ConeData> = [{ step: back }]as ConeData[];
+    this.sendData('coneopt', cc )
       .subscribe(ddd => {
-        console.log(ddd);
-        this.DATA = [ddd];
+          this.DATA = ddd;
       }, error => console.error(error));
   }
   ngOnInit() {
-    console.log('init');
-    this.init();
-  }
-  ngOnChanges() {
-    console.log('change');
     this.init();
   }
   init() {
     this.http.get<ConeData[]>(this.baseUrl + 'coneopt')
-      .pipe(map(ddd => {
+    .subscribe(ddd => {
         console.log(ddd);
-        this.DATA = ddd;
-        return ddd;
-      })).subscribe(result => {
-        console.log(result);
-        this.DATA = result;
+          this.DATA = ddd;
       }, error => console.error(error));
   }
 }

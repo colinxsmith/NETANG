@@ -3,11 +3,11 @@ circle {
 }
 
 rect.plus {
-    fill: green;
+    fill: url(#grad2);
 }
 
 rect.minus {
-    fill: red;
+    fill:url(#grad1);
 }
 
 line {

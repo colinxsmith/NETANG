@@ -11,7 +11,6 @@ namespace NETANG.Controllers
     [Route("[controller]")]
     public class ConeOptController : ControllerBase
     {
-        private double stepMax = 0.1;
         private readonly ILogger<ConeOptController> _logger;
 
         public ConeOptController(ILogger<ConeOptController> logger)
@@ -21,45 +20,19 @@ namespace NETANG.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ConeOpt>> GetAll()
         {
-            ConeOpt send = cones(stepMax);
+            ConeOpt send = cones();
             return new[]// We only want to send 1 optimisation result
             {
             send
             };
         }
-        /*    [HttpPost]
-            public Task<ActionResult<ConeOpt>> CreateAsync(ConeOpt product)
-            {
-                if (product.Description.Contains("XYZ Widget"))
-                {
-                    return BadRequest();
-                }
-
-        cones(product.step);
-
-            return CreatedAtAction("step", new { step = product.step
-    }, product);
-        }
-*/
         [HttpPost]
-        public ActionResult<ConeOpt> Create(ConeOpt pet)
+        public ActionResult<ConeOpt[]> Create(ConeOpt[] pet)
         {
-            stepMax=pet.step;
-            ConeOpt back=cones(stepMax);
-            Console.WriteLine($"step is {pet.step}");
-
-            return CreatedAtAction("step", back, back);
+            ConeOpt []back = new ConeOpt[1];
+            back[0]=cones(pet[0].step);
+            return CreatedAtAction("DAVID", back);
         }
-        /*     [HttpPost]
-             public IActionResult Create(ConeOpt receive)
-             {
-                 Console.WriteLine($"tau = {receive.tau}");
-                 Console.WriteLine($"kappa = {receive.kappa}");
-                 Console.WriteLine($"step = {receive.step}");
-                 Display(receive.x, 1);
-                 stepMax = receive.step;
-                 return Accepted();
-             }*/
         void Display(double[] x, double tau = 1.0)
         {
             if (x == null) return;
@@ -69,7 +42,7 @@ namespace NETANG.Controllers
             }
             Console.Write($"\n");
         }
-        public ConeOpt cones(double stepm)
+        public ConeOpt cones(double stepm=1e-4)
         {
             uint ncone = 1, m = 2;
             int[] cone = { 12 };
@@ -105,7 +78,7 @@ namespace NETANG.Controllers
                 stepm, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
 
             Console.WriteLine($"{tau[0]}   {kappa[0]}");
-            Console.WriteLine($"{stepMax}");
+            Console.WriteLine($"step = {stepm}");
             Display(x, tau[0]);
             Display(y, tau[0]);
             Display(s, tau[0]);

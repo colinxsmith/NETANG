@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,7 +6,7 @@ import * as d3 from 'd3';
   templateUrl: './barplot.component.html',
   styleUrls: ['./barplot.component.css']
 })
-export class BarplotComponent implements OnInit {
+export class BarplotComponent implements OnInit, OnChanges {
   @Input() DATA: Array<number> = [];
   @Input() width = 500;
   @Input() height = 500;
@@ -28,11 +28,12 @@ export class BarplotComponent implements OnInit {
     this.scaleY
       .domain([d3.min(this.DATA), d3.max(this.DATA)])
       .range([this.height * (1 - this.rimY), this.height * this.rimY]);
+  }
+  ngOnChanges() {
     setTimeout(() => {
       this.update();
     }, 100);
   }
-
   info(e: MouseEvent, x: number, y: number, inout = false) {
     const tip = d3.select('app-barplot').select('div.mainTip');
     const origin = (d3
