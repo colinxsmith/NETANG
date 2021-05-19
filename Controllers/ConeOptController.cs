@@ -11,6 +11,7 @@ namespace NETANG.Controllers
     [Route("[controller]")]
     public class ConeOptController : ControllerBase
     {
+        private double stepMax = 0.1;
         private readonly ILogger<ConeOptController> _logger;
 
         public ConeOptController(ILogger<ConeOptController> logger)
@@ -33,10 +34,13 @@ namespace NETANG.Controllers
             Console.WriteLine($"kappa = {receive.kappa}");
             Console.WriteLine($"step = {receive.step}");
             Display(receive.x, 1);
+            stepMax = receive.step;
+            GetAll();
             return Accepted();
         }
         void Display(double[] x, double tau = 1.0)
         {
+            if (x == null) return;
             foreach (var d in x)
             {
                 Console.Write($"{d / tau} ");
@@ -65,7 +69,6 @@ namespace NETANG.Controllers
             double[] kappa = { 1.0 };
             var comptoll = 1e-8;
             var gaptoll = 1e-8;
-            var stepmax = 1e-1;
             int straight = 0;
             int fastbreak = 1;
             int log = 0;
@@ -77,9 +80,10 @@ namespace NETANG.Controllers
             uint fcone = 0;
             safecsharp.Conic_VeryGeneral(ncone, cone, typecone, m, x, s, y, A, b, c, tau,
                 kappa, comptoll, gaptoll,
-                stepmax, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
+                stepMax, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
 
             Console.WriteLine($"{tau[0]}   {kappa[0]}");
+            Console.WriteLine($"{stepMax}");
             Display(x, tau[0]);
             Display(y, tau[0]);
             Display(s, tau[0]);
@@ -91,7 +95,7 @@ namespace NETANG.Controllers
             back.b = b;
             back.kappa = kappa[0];
             back.tau = tau[0];
-            back.step = stepmax;
+            back.step = stepMax;
             for (var i = 0; i < x.Length; ++i) back.x[i] /= tau[0];
             for (var i = 0; i < y.Length; ++i) back.y[i] /= tau[0];
             for (var i = 0; i < s.Length; ++i) back.z[i] /= tau[0];
