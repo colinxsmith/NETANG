@@ -21,23 +21,45 @@ namespace NETANG.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ConeOpt>> GetAll()
         {
-            ConeOpt send = cones();
+            ConeOpt send = cones(stepMax);
             return new[]// We only want to send 1 optimisation result
             {
             send
             };
         }
-        [HttpPost]
-        public IActionResult Create(ConeOpt receive)
-        {
-            Console.WriteLine($"tau = {receive.tau}");
-            Console.WriteLine($"kappa = {receive.kappa}");
-            Console.WriteLine($"step = {receive.step}");
-            Display(receive.x, 1);
-            stepMax = receive.step;
-            GetAll();
-            return Accepted();
+        /*    [HttpPost]
+            public Task<ActionResult<ConeOpt>> CreateAsync(ConeOpt product)
+            {
+                if (product.Description.Contains("XYZ Widget"))
+                {
+                    return BadRequest();
+                }
+
+        cones(product.step);
+
+            return CreatedAtAction("step", new { step = product.step
+    }, product);
         }
+*/
+        [HttpPost]
+        public ActionResult<ConeOpt> Create(ConeOpt pet)
+        {
+            stepMax=pet.step;
+            ConeOpt back=cones(stepMax);
+            Console.WriteLine($"step is {pet.step}");
+
+            return CreatedAtAction("step", back, back);
+        }
+        /*     [HttpPost]
+             public IActionResult Create(ConeOpt receive)
+             {
+                 Console.WriteLine($"tau = {receive.tau}");
+                 Console.WriteLine($"kappa = {receive.kappa}");
+                 Console.WriteLine($"step = {receive.step}");
+                 Display(receive.x, 1);
+                 stepMax = receive.step;
+                 return Accepted();
+             }*/
         void Display(double[] x, double tau = 1.0)
         {
             if (x == null) return;
@@ -47,7 +69,7 @@ namespace NETANG.Controllers
             }
             Console.Write($"\n");
         }
-        public ConeOpt cones()
+        public ConeOpt cones(double stepm)
         {
             uint ncone = 1, m = 2;
             int[] cone = { 12 };
@@ -80,7 +102,7 @@ namespace NETANG.Controllers
             uint fcone = 0;
             safecsharp.Conic_VeryGeneral(ncone, cone, typecone, m, x, s, y, A, b, c, tau,
                 kappa, comptoll, gaptoll,
-                stepMax, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
+                stepm, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
 
             Console.WriteLine($"{tau[0]}   {kappa[0]}");
             Console.WriteLine($"{stepMax}");
@@ -95,7 +117,7 @@ namespace NETANG.Controllers
             back.b = b;
             back.kappa = kappa[0];
             back.tau = tau[0];
-            back.step = stepMax;
+            back.step = stepm;
             for (var i = 0; i < x.Length; ++i) back.x[i] /= tau[0];
             for (var i = 0; i < y.Length; ++i) back.y[i] /= tau[0];
             for (var i = 0; i < s.Length; ++i) back.z[i] /= tau[0];
