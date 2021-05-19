@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, OnChanges } from '@angular/core';
+import { Component, Input, ElementRef, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,7 +6,7 @@ import * as d3 from 'd3';
   templateUrl: './barplot.component.html',
   styleUrls: ['./barplot.component.css']
 })
-export class BarplotComponent implements OnInit, OnChanges {
+export class BarplotComponent implements OnChanges {
   @Input() DATA: Array<number> = [];
   @Input() width = 500;
   @Input() height = 500;
@@ -22,12 +22,6 @@ export class BarplotComponent implements OnInit, OnChanges {
   constructor(private element: ElementRef) { }
 
   ngOnInit() {
-    this.scaleX
-      .domain([0, this.DATA.length])
-      .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
-    this.scaleY
-      .domain([d3.min(this.DATA), d3.max(this.DATA)])
-      .range([this.height * (1 - this.rimY), this.height * this.rimY]);
   }
   ngOnChanges() {
     setTimeout(() => {
@@ -54,6 +48,12 @@ export class BarplotComponent implements OnInit, OnChanges {
     }
   }
   update() {
+    this.scaleX
+      .domain([0, this.DATA.length])
+      .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
+    this.scaleY
+      .domain([d3.min(this.DATA), d3.max(this.DATA)])
+      .range([this.height * (1 - this.rimY), this.height * this.rimY]);
     d3.select(this.element.nativeElement).selectAll('rect').data(this.DATA)
       .transition()
       .duration(2000)
