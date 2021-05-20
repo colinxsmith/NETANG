@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnChanges } from '@angular/core';
+import { Component, Input, ElementRef, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,8 +6,11 @@ import * as d3 from 'd3';
   templateUrl: './barplot.component.html',
   styleUrls: ['./barplot.component.css']
 })
-export class BarplotComponent implements OnChanges {
+export class BarplotComponent implements OnChanges, OnInit {
   @Input() DATA: Array<number> = [];
+  @Input() editdata: Array<number> = [];
+  @Output() editChange: EventEmitter<Array<number>> = new EventEmitter<Array<number>>();
+  dataToChange: Array<number> = [];
   @Input() width = 500;
   @Input() height = 500;
   @Input() title = '';
@@ -26,6 +29,9 @@ export class BarplotComponent implements OnChanges {
     setTimeout(() => {
       this.update();
     }, 100);
+  }
+  ngOnInit() {
+    this.dataToChange = this.DATA.map(d => d);
   }
   info(e: MouseEvent, x: number, y: number, inout = false) {
     const tip = d3.select('app-barplot').select('div.mainTip');
@@ -46,12 +52,20 @@ export class BarplotComponent implements OnChanges {
       tip.style('opacity', 0).style('display', 'none');
     }
   }
+  getnewChange = (index: number) => {
+    const newtext = +(d3.select(this.element.nativeElement).select('input.newdat').node() as HTMLInputElement).value;
+    const textv = d3.select(this.element.nativeElement).selectAll('text.editbox').nodes()[index] as SVGTextElement;
+    this.dataToChange[index] = newtext;
+    console.log(this.dataToChange);
+      this.editdata = this.dataToChange;
+    this.update();
+  }
   update() {
     this.scaleX
-      .domain([0, this.DATA.length])
+      .domain([0, this.dataToChange.length])
       .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
     this.scaleY
-      .domain([d3.min(this.DATA), d3.max(this.DATA)])
+      .domain([d3.min(this.dataToChange), d3.max(this.dataToChange)])
       .range([this.height * (1 - this.rimY), this.height * this.rimY]);
     d3.select(this.element.nativeElement).selectAll('rect.ongraph').data(this.DATA)
       .transition()
@@ -62,5 +76,6 @@ export class BarplotComponent implements OnChanges {
       .attrTween('height', (d, i) => t => {
         return `${this.abshack(this.scaleY(d * t) - this.scaleY(d * (1 - t)))}`;
       });
+      this.editChange.emit(this.editdata);
   }
 }
