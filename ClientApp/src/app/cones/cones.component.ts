@@ -23,10 +23,12 @@ export class ConesComponent implements OnInit {
     return this.http.post<Array<ConeData>>(`${this.baseUrl}${key}`, sendObject, options);
   }
   sendStep() {
-    const back = +(d3.select(this.element.nativeElement).select('input').node() as HTMLInputElement & Event).value;
+    const back = +(d3.select(this.element.nativeElement).select('input.step').node() as HTMLInputElement & Event).value;
+    console.log(back, this.newB, this.newC);
     const cc: Array<ConeData> = [{ step: back, c: this.newC, b: this.newB }] as Array<ConeData>;
     this.sendData('coneopt', cc)
       .subscribe(ddd => {
+        console.log(ddd);
         this.DATA = ddd;
       }, error => console.error(error));
   }

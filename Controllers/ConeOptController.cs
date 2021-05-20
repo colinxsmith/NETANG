@@ -21,6 +21,9 @@ namespace NETANG.Controllers
         public ActionResult<IEnumerable<ConeOpt>> GetAll()
         {
             ConeOpt send = cones();
+            Display(send.c);
+            Display(send.b);
+            Console.WriteLine($"{send.step}");
             return new[]// We only want to send 1 optimisation result
             {
             send
@@ -29,8 +32,11 @@ namespace NETANG.Controllers
         [HttpPost]
         public ActionResult<ConeOpt[]> Create(ConeOpt[] pet)
         {
-            ConeOpt []back = new ConeOpt[1];
-            back[0]=cones(pet[0].step);
+            ConeOpt[] back = new ConeOpt[1];
+            Display(pet[0].c);
+            Display(pet[0].b);
+            Console.WriteLine($"{pet[0].step}");
+            back[0] = cones(pet[0]);
             return CreatedAtAction("DAVID", back);
         }
         void Display(double[] x, double tau = 1.0)
@@ -42,7 +48,7 @@ namespace NETANG.Controllers
             }
             Console.Write($"\n");
         }
-        public ConeOpt cones(double stepm=1e-4)
+        public ConeOpt cones(ConeOpt newd = null)
         {
             uint ncone = 1, m = 2;
             int[] cone = { 12 };
@@ -72,7 +78,14 @@ namespace NETANG.Controllers
             int homog = 1;
             var nf = 0;
             double[] SV = null, FC = null, FL = null;
+            double stepm = 0.001;
             uint fcone = 0;
+            if (newd != null)
+            {
+                stepm = newd.step;
+                if (newd.b != null) b = newd.b;
+                if (newd.c != null) c = newd.c;
+            }
             safecsharp.Conic_VeryGeneral(ncone, cone, typecone, m, x, s, y, A, b, c, tau,
                 kappa, comptoll, gaptoll,
                 stepm, straight, fastbreak, log, outfile, method, homog, nf, SV, FL, FC, fcone);
