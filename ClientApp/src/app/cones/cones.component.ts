@@ -25,7 +25,7 @@ export class ConesComponent implements OnInit {
   sendStep() {
     const back = +(d3.select(this.element.nativeElement).select('input.step').node() as HTMLInputElement & Event).value;
     console.log(back, this.newB, this.newC);
-    const cc: Array<ConeData> = [{ step: back, c: this.newC, b: this.newB }] as Array<ConeData>;
+    const cc: Array<ConeData> = [{ step: back, c: this.newC===[]? this.DATA[0].c:this.newC, b: this.newB===[]?this.DATA[0].b:this.newB }] as Array<ConeData>;
     this.sendData('coneopt', cc)
       .subscribe(ddd => {
         console.log(ddd);
