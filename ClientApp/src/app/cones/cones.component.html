@@ -7,8 +7,8 @@
     <td><app-barplot [title]="'Primal'" [height]="height" [width]="width" [DATA]="DATA[0].x"></app-barplot></td>
     <td><app-barplot [title]="'Dual'" [height]="height" [width]="width" [DATA]="DATA[0].y"></app-barplot></td>
     <td><app-barplot [title]="'Complementary'" [height]="height" [width]="width" [DATA]="DATA[0].z"></app-barplot></td>
-    <td><app-barplot [title]="'Utility'" [height]="height" [width]="width" [DATA]="DATA[0].c"></app-barplot></td>
-    <td><app-barplot [title]="DATA[0].y.length+' Constraints'" [height]="height" [width]="width" [DATA]="DATA[0].b"></app-barplot></td>
+    <td><app-barplot [editvalues]="true" [title]="'Utility'" [height]="height" [width]="width" [DATA]="DATA[0].c"></app-barplot></td>
+    <td><app-barplot [editvalues]="true" [title]="DATA[0].y.length+' Constraints'" [height]="height" [width]="width" [DATA]="DATA[0].b"></app-barplot></td>
   </tr>
   <tr>
   <td>&tau;={{format(DATA[0].tau)}}</td>

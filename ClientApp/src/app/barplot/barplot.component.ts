@@ -11,6 +11,7 @@ export class BarplotComponent implements OnChanges {
   @Input() width = 500;
   @Input() height = 500;
   @Input() title = '';
+  @Input() editvalues = false;
   abshack = Math.abs;
   scaleX = d3.scaleLinear();
   scaleY = d3.scaleLinear();
@@ -21,8 +22,6 @@ export class BarplotComponent implements OnChanges {
   translatehack = (x: number, y: number, r = 0) => `translate(${x},${y}) rotate(${r})`;
   constructor(private element: ElementRef) { }
 
-  ngOnInit() {
-  }
   ngOnChanges() {
     setTimeout(() => {
       this.update();
@@ -54,7 +53,7 @@ export class BarplotComponent implements OnChanges {
     this.scaleY
       .domain([d3.min(this.DATA), d3.max(this.DATA)])
       .range([this.height * (1 - this.rimY), this.height * this.rimY]);
-    d3.select(this.element.nativeElement).selectAll('rect').data(this.DATA)
+    d3.select(this.element.nativeElement).selectAll('rect.ongraph').data(this.DATA)
       .transition()
       .duration(2000)
       .attrTween('y', d => t => {

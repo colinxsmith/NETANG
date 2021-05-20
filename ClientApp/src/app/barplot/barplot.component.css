@@ -7,7 +7,7 @@ rect.plus {
 }
 
 rect.minus {
-    fill:url(#grad1);
+    fill: url(#grad1);
 }
 
 line {
@@ -21,6 +21,16 @@ text.lab {
 
 h1 {
     font-size: 20px;
+}
+
+text.editbox {
+    text-anchor: middle;
+    font-size: 10px;
+}
+
+rect.editbox {
+    fill: grey;
+    opacity: 0.2;
 }
 
 div.mainTip {
