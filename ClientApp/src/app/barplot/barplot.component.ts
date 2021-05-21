@@ -57,7 +57,7 @@ export class BarplotComponent implements OnChanges, OnInit {
     const textv = d3.select(this.element.nativeElement).selectAll('text.editbox').nodes()[index] as SVGTextElement;
     this.dataToChange[index] = newtext;
     console.log(this.dataToChange);
-      this.editdata = this.dataToChange;
+    this.editdata = this.dataToChange;
     this.update();
   }
   update() {
@@ -65,7 +65,7 @@ export class BarplotComponent implements OnChanges, OnInit {
       .domain([0, this.dataToChange.length])
       .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
     this.scaleY
-      .domain([d3.min(this.dataToChange), d3.max(this.dataToChange)])
+      .domain([Math.min(d3.min(this.dataToChange), 0), d3.max(this.dataToChange)])
       .range([this.height * (1 - this.rimY), this.height * this.rimY]);
     d3.select(this.element.nativeElement).selectAll('rect.ongraph').data(this.DATA)
       .transition()
@@ -76,6 +76,6 @@ export class BarplotComponent implements OnChanges, OnInit {
       .attrTween('height', (d, i) => t => {
         return `${this.abshack(this.scaleY(d * t) - this.scaleY(d * (1 - t)))}`;
       });
-      this.editChange.emit(this.editdata);
+    this.editChange.emit(this.editdata);
   }
 }

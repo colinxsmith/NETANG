@@ -12,6 +12,8 @@ export class ConesComponent implements OnInit {
   height = 200;
   newC: Array<number> = [];
   newB: Array<number> = [];
+  primal: number;
+  dual: number;
   format = (n: number) => d3.format('0.4f')(n);
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private element: ElementRef) {
   }
@@ -22,14 +24,21 @@ export class ConesComponent implements OnInit {
     };
     return this.http.post<Array<ConeData>>(`${this.baseUrl}${key}`, sendObject, options);
   }
+  over(e: MouseEvent, inout = false) {
+    d3.select(e.target as HTMLInputElement & EventTarget).classed('over', inout);
+  }
   sendStep() {
     const back = +(d3.select(this.element.nativeElement).select('input.step').node() as HTMLInputElement & Event).value;
     console.log(back, this.newB, this.newC);
-    const cc: Array<ConeData> = [{ step: back, c: this.newC===[]? this.DATA[0].c:this.newC, b: this.newB===[]?this.DATA[0].b:this.newB }] as Array<ConeData>;
+    const cc: Array<ConeData> = [{
+      step: back, c: this.newC.length === 0 ? this.DATA[0].c : this.newC,
+      b: this.newB.length === 0 ? this.DATA[0].b : this.newB
+    }] as Array<ConeData>;
     this.sendData('coneopt', cc)
       .subscribe(ddd => {
         console.log(ddd);
         this.DATA = ddd;
+        this.calc();
       }, error => console.error(error));
   }
   newDatC(e: Array<number>) {
@@ -41,11 +50,18 @@ export class ConesComponent implements OnInit {
   ngOnInit() {
     this.init();
   }
+  calc() {
+    this.dual = 0;
+    this.DATA[0].y.forEach((d, i) => this.dual += d * this.DATA[0].b[i]);
+    this.primal = 0;
+    this.DATA[0].x.forEach((d, i) => this.primal += d * this.DATA[0].c[i]);
+  }
   init() {
     this.http.get<Array<ConeData>>(this.baseUrl + 'coneopt')
       .subscribe(ddd => {
         console.log(ddd);
         this.DATA = ddd;
+        this.calc();
       }, error => console.error(error));
   }
 }

@@ -13,9 +13,20 @@
   <tr>
   <td>&tau;={{format(DATA[0].tau)}}</td>
   <td>&kappa;={{format(DATA[0].kappa)}}</td>
-  <td>Minimum step length: {{DATA[0].step}}<button (click)="sendStep()">Send</button><input class="step" style="width:40px" [min]="0" [max]="1" [value]="3"></td>
-
+  <td><div *ngIf="DATA[0].kappa>1000*DATA[0].tau" style="color:red;font-size:30px" >INFEASIBLE</div></td>
+  <td>Minimum step length: {{DATA[0].step}}<input class="step" style="width:5em" [min]="0" [max]="1" [value]="DATA[0].step"></td>
+  <td></td>
   </tr>
-</table>
+  <ng-container *ngIf="DATA[0].kappa<=1000*DATA[0].tau">
+  <tr >
+  <td>
+  Primal: {{primal}}
+  </td>
+  <td>
+  Dual: {{dual}}
+  </td>
+  </tr>
+  </ng-container>
+</table><button  (mouseover)="over($event,true)" (mouseleave)="over($event)" (click)="sendStep()">Send New Values</button>
 
 </ng-container>

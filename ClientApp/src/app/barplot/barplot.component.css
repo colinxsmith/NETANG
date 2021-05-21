@@ -2,6 +2,10 @@ circle {
     fill: green;
 }
 
+input.newdat {
+    width: 5em;
+}
+
 rect.plus {
     fill: url(#grad2);
 }

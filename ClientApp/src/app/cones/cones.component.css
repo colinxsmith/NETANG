@@ -18,3 +18,21 @@ text.lab {
     font-size: 20px;
     text-anchor: end;
 }
+
+button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 100%;
+    width: 15%;
+    background-image: linear-gradient(brown, cyan);
+}
+
+button.over {
+    background-image: linear-gradient(yellow, blue);
+}
