@@ -64,8 +64,9 @@ export class BarplotComponent implements OnChanges, OnInit {
     this.scaleX
       .domain([0, this.dataToChange.length])
       .range([this.width * this.rimX, this.width * (1 - 0.5 * this.rimX)]);
+    const useforscale = this.editvalues ? this.dataToChange : this.DATA
     this.scaleY
-      .domain([Math.min(d3.min(this.dataToChange), 0), d3.max(this.dataToChange)])
+      .domain([Math.min(d3.min(useforscale), 0), d3.max(useforscale)])
       .range([this.height * (1 - this.rimY), this.height * this.rimY]);
     d3.select(this.element.nativeElement).selectAll('rect.ongraph').data(this.DATA)
       .transition()
