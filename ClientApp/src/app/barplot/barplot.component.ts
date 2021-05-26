@@ -35,6 +35,9 @@ export class BarplotComponent implements OnChanges, OnInit {
   }
   info(e: MouseEvent, x: number, y: number, inout = false) {
     const tip = d3.select('app-barplot').select('div.mainTip');
+    const Torg = ((d3.select('body').node() as HTMLElement)
+    /*.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode as HTMLElement*/)
+      .getBoundingClientRect().left;
     const origin = (d3
       .select('app-cones')
       .node() as HTMLElement).getBoundingClientRect(); // Try to get position correct when the picture has scrollbars.
@@ -47,6 +50,9 @@ export class BarplotComponent implements OnChanges, OnInit {
         .style('opacity', 1)
         .style('display', 'inline-block')
         .html(`x:${x} ${this.format(y)}`);
+      const wwww = (tip.node() as HTMLElement).getBoundingClientRect();
+      console.log(wwww.width, origin.left - Torg);
+      tip.style('left', `${e.clientX - wwww.width * 0.5 - Torg}px`);
     } else {
       here.style('opacity', 1);
       tip.style('opacity', 0).style('display', 'none');

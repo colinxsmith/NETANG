@@ -68,12 +68,12 @@ namespace NETANG.Controllers
             var y = new double[m];
             double[] tau = { 1.0 };
             double[] kappa = { 1.0 };
-            var comptoll = 1e-8;
-            var gaptoll = 1e-8;
+            var comptoll = 1e-9;
+            var gaptoll = 1e-9;
             int straight = 0;
-            int fastbreak = 1;
+            int fastbreak = 0;
             int log = 0;
-            int method = 3;
+            int method = 2;
             var outfile = "log";
             int homog = 1;
             var nf = 0;
