@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve --host 0.0.0.0 --port 1026",
         "build": "ng build",
         "build:ssr": "ng run NETANG:server:dev",
         "test": "ng test",
@@ -21,7 +21,6 @@
         "@angular/platform-browser-dynamic": "^11.2.14",
         "@angular/platform-server": "^11.2.14",
         "@angular/router": "^11.2.14",
-        "@nguniversal/module-map-ngfactory-loader": "^8",
         "@types/d3": "^6.3.0",
         "bootstrap": "^4.6.0",
         "core-js": "^3.8.3",
