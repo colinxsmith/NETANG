@@ -26,7 +26,7 @@
                 <rect  [style.fill-opacity]="0"  (mouseleave)="info($event, i, x)"
                     (click)="getnewChange(i)"
                     (mouseenter)="info($event, i, x, true)" [attr.width]="scaleX(1)-scaleX(0)"
-                    [attr.height]="5+abshack(scaleY(x)-scaleY(0))" [attr.x]="scaleX(i)" [attr.y]="scaleY(x>=0?x:0)">
+                    [attr.height]="10+abshack(scaleY(x)-scaleY(0))" [attr.x]="scaleX(i)" [attr.y]="-5+scaleY(x>=0?x:0)">
                 </rect>
             </g>
             <g *ngIf="editvalues">
