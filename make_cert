@@ -4,3 +4,4 @@
   openssl verify localhost.crt
   cp localhost.crt /usr/local/share/ca-certificates
   sudo update-ca-certificates
+  #update appsettings.json (done in editor)
