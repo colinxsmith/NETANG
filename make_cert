@@ -2,6 +2,6 @@
   openssl pkcs12 -export -out localhost.pfx -inkey localhost.key -in localhost.crt
   openssl verify -CAfile localhost.crt localhost.crt
   openssl verify localhost.crt
-  cp localhost.crt /usr/local/share/ca-certificates
+  sudo cp localhost.crt /usr/local/share/ca-certificates
   sudo update-ca-certificates
   #update appsettings.json (done in editor)
