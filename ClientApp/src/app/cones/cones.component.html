@@ -2,7 +2,7 @@
 <h1 style="text-align: center;" id="tableLabel">Conic Optimisation Results</h1>
 
 <ng-container *ngIf="DATA&&DATA[0]">
-<button style="width:50%" (mouseover)="over($event,true)" (mouseleave)="over($event)" (click)="sendStep()">Send New Values</button>
+<button style="width:50%" (mouseover)="over($event,true)" (mouseleave)="over($event)" (click)="sendStep()">Send New Optimisation Parameters</button>
     <table style="width:100%">
   <tr>
     <td><app-barplot [title]="'Primal'" [height]="height" [width]="width" [DATA]="DATA[0].x"></app-barplot></td>
