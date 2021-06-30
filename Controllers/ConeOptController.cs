@@ -78,7 +78,7 @@ namespace NETANG.Controllers
             int homog = 1;
             var nf = 0;
             double[] SV = null, FC = null, FL = null;
-            double stepm = 0.001;
+            double stepm = 0.1;
             uint fcone = 0;
             if (newd != null)
             {

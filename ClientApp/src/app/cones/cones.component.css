@@ -19,6 +19,10 @@ text.lab {
     text-anchor: end;
 }
 
+div.maindiv {
+    text-align: center;
+}
+
 button {
     border: none;
     color: white;
