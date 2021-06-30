@@ -15,6 +15,7 @@ export class ConesComponent implements OnInit {
   primal: number;
   dual: number;
   format = (n: number) => d3.format('0.4f')(n);
+  format8 = (n: number) => d3.format('0.8f')(n);
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private element: ElementRef) {
   }
   sendData(key = 'coneopt', sendObject = {} as Array<ConeData>) {

@@ -20,10 +20,10 @@
   <ng-container *ngIf="DATA[0].kappa<=1000*DATA[0].tau">
   <tr >
   <td>
-  Primal: {{primal}}
+  Primal: {{format8(primal)}}
   </td>
   <td>
-  Dual: {{dual}}
+  Dual: {{format8(dual)}}
   </td><td></td><td></td>
   <td style="text-align:justify">
   {{DATA[0].version}}
