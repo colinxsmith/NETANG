@@ -74,4 +74,5 @@ interface ConeData {
   tau: number;
   kappa: number;
   step: number;
+  version: string;
 }

@@ -72,7 +72,7 @@ namespace NETANG.Controllers
             var gaptoll = 1e-9;
             int straight = 0;
             int fastbreak = 0;
-            int log = 0;
+            int log = 2;
             int method = 2;
             var outfile = "log";
             int homog = 1;
@@ -96,6 +96,7 @@ namespace NETANG.Controllers
             Display(y, tau[0]);
             Display(s, tau[0]);
             var back = new ConeOpt();
+            back.version = safecsharp.version();
             back.x = (double[])x.Clone();
             back.y = (double[])y.Clone();
             back.z = (double[])s.Clone();
