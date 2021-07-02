@@ -10,5 +10,6 @@ namespace NETANG
         public double tau{get;set;}
         public double kappa{get;set;}
         public double step{get;set;}
+        public string version{get;set;}
     }
 }
