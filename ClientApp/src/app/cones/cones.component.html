@@ -25,12 +25,13 @@
   </td>
   <td>
   Dual: {{format8(dual)}}
-  </td><td></td><td></td>
-  <td style="text-align:justify">
+  </td><td></td>
+  <td   colspan="2"  style="text-align:justify;">
   {{DATA[0].version}}
   </td>
   </tr>
   </ng-container>
 </table>
+<span *ngIf="DATA[0].kappa>1000*DATA[0].tau" style="text-align:justify;">{{DATA[0].version}}</span>
 
 </div>
