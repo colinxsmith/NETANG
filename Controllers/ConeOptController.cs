@@ -72,7 +72,7 @@ namespace NETANG.Controllers
             var gaptoll = 1e-9;
             int straight = 0;
             int fastbreak = 0;
-            int log = 0;
+            int log = 2;
             int method = 2;
             var outfile = "log";
             int homog = 1;
