@@ -40,3 +40,6 @@ button {
 button.over {
     background-image: linear-gradient(yellow, blue);
 }
+span{
+    text-decoration: underline;
+}
