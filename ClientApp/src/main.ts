@@ -7,9 +7,9 @@ import { environment } from './environments/environment';
 function getBaseUrl() {
   const back = document.getElementsByTagName('base')[0].href;
   console.log(back);
-  //return 'https://192.168.0.25:5001/';
-   return 'https://localhost:5001/';
-  //return 'http://localhost:5000/';
+  // return 'https://192.168.0.25:5001/';
+  return 'https://10.2.100.200:5001/';
+  // return 'http://localhost:5000/';
   return back;
 }
 
