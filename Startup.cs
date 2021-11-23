@@ -75,7 +75,7 @@ namespace NETANG
                 if (env.IsDevelopment())
                 {
                      // spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseProxyToSpaDevelopmentServer("http://10.2.100.200:1026");
                 }
             });
        
